@@ -62,7 +62,12 @@ const UserSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    Shipping:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: "Shipping"
+        
+            }],
 });
 
 const UserModel = mongoose.model('User', UserSchema);

@@ -1,5 +1,5 @@
 const express = require('express')
-const { createUser, updateUser, deleteUser, loginUser, SendResetPasswordEmailUser, changePasswordUser } = require('../controller/userController')
+const { createUser, updateUser, deleteUser, loginUser, SendResetPasswordEmailUser, changePasswordUser } = require('../Controllers/userController')
 
 
 
