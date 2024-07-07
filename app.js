@@ -2,12 +2,13 @@ require('dotenv').config()
 const express = require('express');
 const connectDB = require('./database/connect');
 const productRouter = require('./Routes/productRouter');
-const adminRouter = require('./Routes/adminRouter');
+
 const userRouter=require('./Routes/userRoutes');
 const shippingRouter = require('./Routes/shippingRouter');
 const cartRouter = require('./Routes/addCartRouter');
 const orderRouter = require('./Routes/orderRouter');
 const paymentRouter = require('./Routes/paymentRouter');
+const adminRouter = require('./Routes/adminRoutes');
 
 
 const app = express()
