@@ -20,7 +20,11 @@ const productSchema = new mongoose.Schema({
       adminId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Admin"
-    }
+    },
+    reviews:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review"
+  }],
 
 })
 const productModel = mongoose.model("Product" , productSchema)
