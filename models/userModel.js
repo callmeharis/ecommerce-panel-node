@@ -68,6 +68,10 @@ const UserSchema = new mongoose.Schema({
         ref: "Shipping"
         
             }],
+            reviews: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Review'
+            }],
 });
 
 const UserModel = mongoose.model('User', UserSchema);

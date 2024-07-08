@@ -9,6 +9,7 @@ const cartRouter = require('./Routes/addCartRouter');
 const orderRouter = require('./Routes/orderRouter');
 const paymentRouter = require('./Routes/paymentRouter');
 const adminRouter = require('./Routes/adminRoutes');
+const reviewRouter = require('./Routes/reviewRouter');
 
 
 const app = express()
@@ -24,6 +25,7 @@ app.use('/api/v1',shippingRouter)
 app.use('/api/v1',cartRouter)
 app.use('/api/v1',orderRouter)
 app.use('/api/v1',paymentRouter)
+app.use('/api/v1',reviewRouter)
 
 
 
