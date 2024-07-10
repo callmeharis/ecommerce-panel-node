@@ -1,10 +1,6 @@
 const express = require('express')
 const { createUser, updateUser, deleteUser, loginUser, SendResetPasswordEmailUser, changePasswordUser } = require('../Controllers/userController')
 
-
-
-
-
 const userRouter = express.Router()
 
 userRouter.post('/createuser', createUser)

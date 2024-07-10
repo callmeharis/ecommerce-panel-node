@@ -26,8 +26,13 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: false,
         match: [/^\d{10,15}$/, 'Phone number must be between 10 to 15 digits']
-    }
+    },
+    products:[{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+    }],
+
 });
 
-const Admin = mongoose.model('Admin', adminSchema);
-module.exports =Admin;
+const adminModel = mongoose.model('Admin', adminSchema);
+module.exports =adminModel;

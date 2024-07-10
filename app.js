@@ -10,6 +10,7 @@ const orderRouter = require('./Routes/orderRouter');
 const paymentRouter = require('./Routes/paymentRouter');
 const adminRouter = require('./Routes/adminRoutes');
 const reviewRouter = require('./Routes/reviewRouter');
+const whislistRouter = require('./Routes/whislistRouter');
 
 
 const app = express()
@@ -26,6 +27,7 @@ app.use('/api/v1',cartRouter)
 app.use('/api/v1',orderRouter)
 app.use('/api/v1',paymentRouter)
 app.use('/api/v1',reviewRouter)
+app.use('/api/v1',whislistRouter)
 
 
 

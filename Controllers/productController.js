@@ -6,7 +6,7 @@ exports.createProduct = async (req, res) => {
   const { adminId } = req.params;
     console.log("adminId", adminId)
 
-  const { description, image, price,review } = req.body;
+  const { description, image, price,review,category} = req.body;
   try {
     const admin = await adminModel.findById(adminId);
     if (!admin) {
@@ -18,7 +18,9 @@ exports.createProduct = async (req, res) => {
       image,
       price,
       review,
-      adminId: adminId
+      category,
+      adminId: adminId,
+      
     });
     await createProduct.save();
     admin.products.push(createProduct._id);
@@ -41,7 +43,7 @@ exports.createProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   const { adminId, productId } = req.params;
-  const { description, image, price, review } = req.body;
+  const { description, image, price, review ,category} = req.body;
 
   try {
     const admin = await adminModel.findById(adminId);
@@ -57,7 +59,8 @@ exports.updateProduct = async (req, res) => {
       description,
       image,
       price,
-      review
+      review,
+      category
     }, { new: true });
 
     if (!updatedProduct) {
@@ -145,4 +148,40 @@ exports.getProducts = async (req, res) => {
 };
 
 
+
+exports.searchCategory = async (req, res) => {
+  const {category}=req.query
+  try {
+    const product=await productModel.find({category})
+    if (!product) {
+      return res.status(404).json({ message: "product not found" })
+    }
+    return res.status(200).json(product)
+  } catch (error) {
+return res.status(500).json({message:"failed search category", error:error.message})
+  }
+
+}
+exports.filterCategory = async (req, res) => {
+  const { adminId, minPrice, maxPrice } = req.query;
+
+  try {
+    const filter = {};
+    if (adminId) {
+      filter.adminId = adminId;
+    }
+    if (minPrice) {
+      filter.price = { ...filter.price, $gte: minPrice };
+    }
+    if (maxPrice) {
+      filter.price = { ...filter.price, $lte: maxPrice };
+    }
+
+    const products = await productModel.find(filter);
+    return res.status(200).json(products);
+  } catch (error) {
+    console.error("Failed to retrieve products:", error);
+    return res.status(500).json({ message: "Failed to retrieve products", error: error.message });
+  }
+};
 
