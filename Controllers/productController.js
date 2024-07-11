@@ -7,6 +7,7 @@ exports.createProduct = async (req, res) => {
     console.log("adminId", adminId)
 
   const { description, image, price,review,category} = req.body;
+  console.log(description, image, price,review,category);
   try {
     const admin = await adminModel.findById(adminId);
     if (!admin) {
@@ -104,6 +105,20 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).json({ message: "Internal server error", error });
   }
 };
+
+exports.getSingleProduct=async(req,res)=>{
+const {productId}=req.params
+try {
+  const product=await productModel.findById(productId)
+  if(!product){
+   return res.status(404).json({message:"product not found"})
+  }
+  return res.status(202).json({message:"product get successfully",product})
+} catch (error) {
+  
+}
+res.status(404).json({ message: "Internal server error", error });
+}
 
 
 
