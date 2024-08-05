@@ -8,10 +8,9 @@ const whislistSchema = new mongoose.Schema({
         ref: "User",
     
     },
-    products:[ {
+    Products:[ {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",
-        required: true
     }]
     
 });

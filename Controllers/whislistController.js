@@ -6,7 +6,9 @@ const productModel=require('../Models/productModel')
 
 
 exports.addToWishlist = async (req, res) => {
-    const { userId, productId } = req.body;
+    const { userId, productId } = req.params;
+
+    console.log("data", userId, productId);
 
     try {
         const user = await UserModel.findById(userId);
@@ -25,15 +27,16 @@ exports.addToWishlist = async (req, res) => {
         if(!wishlist){
             wishlist = new wishlistModel({
                 userId,
-                products: [productId]
+                Products: productId
             })
             await wishlist.save()
         } else {
-            const index = wishlist.products.indexOf(productId);
+            const index = wishlist.Products.indexOf(productId);
             if (index !== -1) {
-                wishlist.products.splice(index, 1);
+                wishlist.Products.splice(index, 1);
+                return res.status(200).json({message: "product removed from whishlist"})
             } else {
-                wishlist.products.push(productId);
+                wishlist.Products.push(productId);
             }
             await wishlist.save();
         }
@@ -47,13 +50,13 @@ exports.addToWishlist = async (req, res) => {
 
 
 exports.whishlistProduct=async(req,res)=>{
-    const {userId}=req.body
+    const {userId}=req.params;
     try {
         const user = await UserModel.findById(userId);
         if(!user){
             res.status(404).json({message:"user not found"})
         }
-        const wishlist=await wishlistModel.findOne({userId}).populate('products')
+        const wishlist=await wishlistModel.findOne({userId}).populate('Products')
         if(!wishlist){
             res.status(404).json({message:"wishlist not found"})
         }
@@ -64,3 +67,4 @@ exports.whishlistProduct=async(req,res)=>{
         return res.status(404).json({message:"internal server error",error})
     }
 }
+

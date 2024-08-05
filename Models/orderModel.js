@@ -2,18 +2,15 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
     cart: {
-        type: {
             image: {
                 type: String,
-                required: true
             },
-            name: {
+            description: {
                 type: String,
                 required: true
             },
             price: {
                 type: Number,
-                required: true
             },
             quantity: {
                 type: Number,
@@ -30,8 +27,6 @@ const orderSchema = new mongoose.Schema({
                 ref: "Product",
                 required: true
             }]
-        },
-        required: true
     },
     shipping: {
         type: {

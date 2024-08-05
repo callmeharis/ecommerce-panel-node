@@ -3,8 +3,8 @@ const { addToWishlist, whishlistProduct } = require("../Controllers/whislistCont
 const whislistRouter=express.Router()
 
 
-whislistRouter.post("/createWhislist",addToWishlist)
-whislistRouter.get("/whishlistProduct", whishlistProduct)
+whislistRouter.get("/createWhislist/:userId/:productId",addToWishlist)
+whislistRouter.get("/whishlistProduct/:userId", whishlistProduct)
 
-
-module.exports=whislistRouter
+  
+module.exports=whislistRouter    

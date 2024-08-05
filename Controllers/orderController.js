@@ -7,35 +7,41 @@ exports.createOrder = async (req, res) => {
     try {
         const { cartId, shippingId } = req.body;
 
-        const cartDetails = await cartModel.findById(cartId).populate('products').exec();
+        console.log(cartId, shippingId);
 
-        const shippingDetails = await Shipping.findById(shippingId).exec();
+        const cartDetails = await cartModel.findById(cartId).populate('products');
 
-        const newOrder = new Order({
-            cart: {
-                image: cartDetails.image,
-                name: cartDetails.name,
-                price: cartDetails.price,
-                quantity: cartDetails.quantity,
-                userId: cartDetails.userId,
-                products: cartDetails.products
-            },
-            shipping: {
-                country: shippingDetails.country,
-                state: shippingDetails.state,
-                city: shippingDetails.city,
-                street: shippingDetails.street,
-                phoneNumber: shippingDetails.phoneNumber,
-                userId: shippingDetails.userId
-            }
-        });
+        const shippingDetails = await Shipping.findById(shippingId);
 
-        await newOrder.save();
+        const orders = [];
+
+        for (const product of cartDetails.products) {
+            const newOrder = new Order({
+                cart: {
+                    image: product.image,
+                    description: product.description,
+                    price: product.price,
+                    quantity: product.quantity,
+                    userId: cartDetails.userId,
+                    productId: product.productId 
+                },
+                shipping: {
+                    country: shippingDetails.country,
+                    state: shippingDetails.state,
+                    city: shippingDetails.city,
+                    street: shippingDetails.street,
+                    phoneNumber: shippingDetails.phoneNumber,
+                    userId: shippingDetails.userId
+                }
+            });
+            orders.push(newOrder);
+            await newOrder.save();
+        }
 
         return res.status(201).json({
             success: true,
-            message: "Order created successfully",
-            order: newOrder
+            message: "Order(s) created successfully",
+            orders: orders
         });
     } catch (error) {
         console.error("Error creating order:", error);
@@ -45,6 +51,7 @@ exports.createOrder = async (req, res) => {
         });
     }
 };
+
 
 
 exports.confirmationEmail = async (req, res) => {
