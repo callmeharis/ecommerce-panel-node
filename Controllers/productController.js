@@ -1,5 +1,6 @@
 const productModel = require("../Models/productModel");
 const adminModel = require("../Models/adminModel");
+const userModel=require("../Models/userModel")
 
 
 exports.createProduct = async (req, res) => {
@@ -140,12 +141,12 @@ exports.getAllProducts = async (req, res) => {
 };
 
 exports.getProducts = async (req, res) => {
-  const { adminId, minPrice, maxPrice } = req.query;
+  const { userId, minPrice, maxPrice } = req.query;
 
   try {
     const filter = {};
-    if (adminId) {
-      filter.adminId = adminId;
+    if (userId) {
+      filter.userId = adminId;
     }
     if (minPrice) {
       filter.price = { ...filter.price, $gte: minPrice };
@@ -178,13 +179,17 @@ return res.status(500).json({message:"failed search category", error:error.messa
 
 }
 exports.filterCategory = async (req, res) => {
-  const { adminId, minPrice, maxPrice } = req.query;
+  const {  minPrice, maxPrice } = req.query;
+
+  // console.log("adminId" ,adminId);
+  console.log("minPrice", minPrice);
+  console.log("MaxPrice", maxPrice);
 
   try {
     const filter = {};
-    if (adminId) {
-      filter.adminId = adminId;
-    }
+    // if (adminId) {
+    //   filter.adminId = adminId;
+    // }
     if (minPrice) {
       filter.price = { ...filter.price, $gte: minPrice };
     }

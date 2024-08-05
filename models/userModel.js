@@ -72,6 +72,10 @@ const UserSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Review'
             }],
+            // card:{
+            //     type:mongoose.Schema.Types.ObjectId,
+            //     ref:'Card'
+            // }
 });
 
 const UserModel = mongoose.model('User', UserSchema);

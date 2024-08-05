@@ -9,7 +9,7 @@ exports.paymentIntent= async(req,res,next)=>{
                 company:"E-commerce"
             }
         })
-        res.status(200).json({clientSecret: payment.client_secert})
+        res.status(200).json({clientSecret: payment.client_secret})
     } catch (error) { 
         console.error(error.message)
         res.status(500).json({ error: 'Failed to create payment intent' });
