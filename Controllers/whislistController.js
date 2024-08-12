@@ -40,7 +40,6 @@ exports.addToWishlist = async (req, res) => {
             }
             await wishlist.save();
         }
-
         return res.status(201).json({ message: "Product added to wishlist successfully", wishlist });
     } catch (error) {
         console.error("Error adding to wishlist:", error);
@@ -64,7 +63,7 @@ exports.whishlistProduct=async(req,res)=>{
 
     } catch (error) {
         console.log(error);
-        return res.status(404).json({message:"internal server error",error})
+        return res.status(500).json({message:"internal server error",error})
     }
 }
 

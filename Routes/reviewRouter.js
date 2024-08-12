@@ -3,7 +3,7 @@ const { createReview, getAverageRating } = require('../Controllers/reviewControl
 const reviewRouter= express.Router();
 
 
-reviewRouter.post('/createReview/:producId/user/:userId', createReview);
+reviewRouter.post('/createReview/:productId/user/:userId', createReview);
 reviewRouter.get('/getAverageRating/:productId', getAverageRating);
 
 

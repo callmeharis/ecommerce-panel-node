@@ -7,8 +7,8 @@ exports.createProduct = async (req, res) => {
   const { adminId } = req.params;
     console.log("adminId", adminId)
 
-  const { description, image, price,review,category} = req.body;
-  console.log(description, image, price,review,category);
+  const {Name, description, image, price,review,category} = req.body;
+  console.log(Name,description, image, price,review,category);
   try {
     const admin = await adminModel.findById(adminId);
     if (!admin) {
@@ -16,6 +16,7 @@ exports.createProduct = async (req, res) => {
       
     }
     const createProduct = new productModel({
+      Name,
       description,
       image,
       price,
@@ -45,7 +46,7 @@ exports.createProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   const { adminId, productId } = req.params;
-  const { description, image, price, review ,category} = req.body;
+  const { Name,description, image, price, review ,category} = req.body;
 
   try {
     const admin = await adminModel.findById(adminId);
@@ -58,6 +59,7 @@ exports.updateProduct = async (req, res) => {
     }
 
     const updatedProduct = await productModel.findByIdAndUpdate(productId, {
+      Name,
       description,
       image,
       price,
@@ -118,7 +120,7 @@ try {
 } catch (error) {
   
 }
-res.status(404).json({ message: "Internal server error", error });
+res.status(500).json({ message: "Internal server error", error });
 }
 
 
@@ -142,11 +144,12 @@ exports.getAllProducts = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
   const { userId, minPrice, maxPrice } = req.query;
+  console.log(userId,minPrice,maxPrice)
 
   try {
     const filter = {};
     if (userId) {
-      filter.userId = adminId;
+      filter.userId = userId;
     }
     if (minPrice) {
       filter.price = { ...filter.price, $gte: minPrice };
@@ -159,11 +162,9 @@ exports.getProducts = async (req, res) => {
     return res.status(200).json(products);
   } catch (error) {
     console.error("Failed to retrieve products:", error);
-    return res.status(500).json({ message: "Failed to retrieve products", error: error.message });
+    return res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
-
-
 
 exports.searchCategory = async (req, res) => {
   const {category}=req.query
@@ -174,10 +175,12 @@ exports.searchCategory = async (req, res) => {
     }
     return res.status(200).json(product)
   } catch (error) {
-return res.status(500).json({message:"failed search category", error:error.message})
+return res.status(500).json({message:"Internal Server Error", error:error.message})
   }
 
 }
+
+
 exports.filterCategory = async (req, res) => {
   const {  minPrice, maxPrice } = req.query;
 
@@ -187,9 +190,7 @@ exports.filterCategory = async (req, res) => {
 
   try {
     const filter = {};
-    // if (adminId) {
-    //   filter.adminId = adminId;
-    // }
+   
     if (minPrice) {
       filter.price = { ...filter.price, $gte: minPrice };
     }
@@ -201,7 +202,7 @@ exports.filterCategory = async (req, res) => {
     return res.status(200).json(products);
   } catch (error) {
     console.error("Failed to retrieve products:", error);
-    return res.status(500).json({ message: "Failed to retrieve products", error: error.message });
+    return res.status(500).json({ message: "Internal server Error", error: error.message });
   }
 };
 

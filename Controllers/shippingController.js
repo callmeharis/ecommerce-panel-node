@@ -1,10 +1,10 @@
 const Shipping=require('../Models/shippingModel')
 // const adminModel=require("../Models/adminModel")
-const userModel=require('../Models/userModel')
+const userModel=require('../Models/userModel')   
 
 exports.createShipping = async (req, res) => {
     const { userId } = req.params;
-      console.log("userId", userId)
+      console.log("userId", userId)   
   
     const { country, state, city,street,  phoneNumber} = req.body;
     try {
@@ -15,7 +15,7 @@ exports.createShipping = async (req, res) => {
       }
       const createShipping = new Shipping({
         country, state, city,street,  phoneNumber, userId
-        
+          
       });
       await createShipping.save();
       user.Shipping.push(createShipping._id);

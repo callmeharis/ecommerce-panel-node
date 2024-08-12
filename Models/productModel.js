@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 const productSchema = new mongoose.Schema({
-   
+
+  Name:{
+    type: String,
+    required:true,
+  } ,
     description: {
         type: String,
         required: true
@@ -21,6 +25,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
       },
+      
       adminId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Admin"

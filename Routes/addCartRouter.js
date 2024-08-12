@@ -5,7 +5,7 @@ const { cardCreate, deleteCard, updateCard, getAllCards } = require('../Controll
 
 cartRouter.post("/cardCreate/:userId/:productId", cardCreate)
 cartRouter.delete("/deleteCard/:cardId/user/:userId",deleteCard)
-cartRouter.put('/updateQuantity/:userId/:productId', updateCard );
+cartRouter.patch('/updateQuantity/:userId/:cardId/:productId', updateCard );
 cartRouter.get('/getAllCards/:userId', getAllCards)
 
 
