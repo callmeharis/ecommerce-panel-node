@@ -4,29 +4,29 @@ const UserModel=require('../Models/userModel')
 
 exports.createReview = async (req, res) => {
     const {  rating, comment } = req.body;
-    const{producId, userId}=req.params
+    const{productId, userId}=req.params
 
-    console.log(producId, userId);
+    console.log("product" + productId,"user"+ userId);
 
     try {
-        const review = new reviewModel({
-          
-            product: producId,
-            user:userId,
-            rating,
-            comment
-        });
-
-        await review.save();
-
-        const product = await productModel.findById(producId);
+        const product = await productModel.findById(productId);
         if (!product) {
             return res.status(404).json({ message: "Product not found" });
         }
         const user= await UserModel.findById(userId);  
         if (!user) {
             return res.status(404).json({ message: "user not found" });
-        }  
+        }
+        const review = new reviewModel({
+            product: product._id,
+            user:user._id,
+            rating,
+            comment
+        });
+
+        await review.save();
+
+          
         product.reviews.push(review._id);
         user.reviews.push(review._id);
 
@@ -36,7 +36,7 @@ exports.createReview = async (req, res) => {
         res.status(201).json({ message: 'Review added successfully' });
     } catch (error) {
         console.error(error);
-        res.status(400).json({ error: 'Failed to add review', error });
+        res.status(500).json({ error: 'Internal Server Error', error });
     }
 };
 
@@ -61,6 +61,6 @@ exports.getAverageRating = async (req, res) => {
         res.json({ averageRating: totalRating });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Failed to get average rating' });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };

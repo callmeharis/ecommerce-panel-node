@@ -4,7 +4,7 @@ const { createUser, updateUser, deleteUser, loginUser, SendResetPasswordEmailUse
 const userRouter = express.Router()
 
 userRouter.post('/createuser', createUser)
-userRouter.put('/userUpdate/:userId', updateUser)
+userRouter.put('/userUpdate/:id', updateUser)
 userRouter.delete('/delete/:userId', deleteUser)
 userRouter.post('/loginuser', loginUser)
 userRouter.post('/resetPass', SendResetPasswordEmailUser)
